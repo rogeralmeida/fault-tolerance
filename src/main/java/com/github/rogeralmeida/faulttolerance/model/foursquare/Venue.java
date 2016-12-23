@@ -5,6 +5,8 @@
  */
 package com.github.rogeralmeida.faulttolerance.model.foursquare;
 
+import org.springframework.scripting.support.StaticScriptSource;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
@@ -16,5 +18,6 @@ public class Venue {
     private String id;
     private String name;
     private String url;
+    private Stats stats;
 
 }
