@@ -27,13 +27,12 @@
         <h1>Fault Tolerance Example?</h1>
         <form action="/search"  method="get">
             <div class="form-group">
-                <label for="exampleInputEmail1">Search</label>
+                <label for="query">Search</label>
                 <input type="search" id="query" name="query" class="form-control" placeholder="Business Name"/>
               </div>
         </form>
 
         <h2>Results</h2>
-        <h3>Test</h3>
         <table class="table">
             <thead>
             <tr>
@@ -42,8 +41,8 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Example</td>
+                <tr th:each="venue : ${venues}">
+                    <td th:text="${{ venue.name}}" >HAHAHAHAHA</td>
                     <td>
                         <a href="#" class="btn btn-primary">View</a>
                     </td>
