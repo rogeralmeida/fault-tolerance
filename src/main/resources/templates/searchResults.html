@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2003 - 2016 Tyro Payments Limited.
+  ~ Lv1, 155 Clarence St, Sydney NSW 2000.
+  ~ All rights reserved.
+  -->
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
@@ -20,12 +25,31 @@
   <body>
     <div class="container">
         <h1>Fault Tolerance Example?</h1>
-        <form action="/search" class="form-inline" method="get">
+        <form action="/search"  method="get">
             <div class="form-group">
                 <label for="exampleInputEmail1">Search</label>
-                <input type="search" name="query" class="form-control" id="exampleInputEmail1" placeholder="Email"/>
+                <input type="search" id="query" name="query" class="form-control" placeholder="Business Name"/>
               </div>
         </form>
+
+        <h2>Results</h2>
+        <h3>Test</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Example</td>
+                    <td>
+                        <a href="#" class="btn btn-primary">View</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
 
     </div>

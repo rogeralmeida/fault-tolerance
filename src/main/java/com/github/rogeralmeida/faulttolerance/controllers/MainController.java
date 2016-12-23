@@ -1,4 +1,4 @@
-package com.example;
+package com.github.rogeralmeida.faulttolerance.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
