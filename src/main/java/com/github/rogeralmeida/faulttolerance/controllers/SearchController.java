@@ -24,7 +24,7 @@ public class SearchController {
     @Autowired
     private SearchService searchService;
 
-    @RequestMapping("/search")
+    @RequestMapping("/")
     public String search(@RequestParam(value = "query", required = false) String query, Model model) {
         Collection<Merchant> merchants = searchService.findMerchants(query);
         model.addAttribute("merchants", merchants);
