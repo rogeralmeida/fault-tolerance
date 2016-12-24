@@ -5,5 +5,13 @@
  */
 package com.github.rogeralmeida.faulttolerance.model;
 
+import javax.lang.model.element.Name;
+
+import lombok.Data;
+
+@Data
 public class Merchant {
+    private String name;
+    private Integer foursquareCheckins;
+    private Integer yelpRating;
 }

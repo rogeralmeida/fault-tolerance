@@ -5,6 +5,8 @@
  */
 package com.github.rogeralmeida.faulttolerance.foursquare.services;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,12 @@ public class FourSquareService {
 
     public Set<Venue> searchVenues(String name) {
 
-        ResponseEntity<VenueSearchResponse> venueSearchResponseResponseEntity = restTemplate.getForEntity(String.format(URL, name), VenueSearchResponse.class);
+        ResponseEntity<VenueSearchResponse> venueSearchResponseResponseEntity = null;
+        try {
+            venueSearchResponseResponseEntity = restTemplate.getForEntity(String.format(URL, URLEncoder.encode(name, "UTF-8")), VenueSearchResponse.class);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         VenueSearchResponse venueSearchResponse = venueSearchResponseResponseEntity.getBody();
         BodyResponse response = venueSearchResponse.getResponse();
         log.info("Response: " + response.toString());

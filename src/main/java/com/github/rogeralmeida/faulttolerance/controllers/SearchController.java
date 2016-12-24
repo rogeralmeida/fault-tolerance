@@ -6,6 +6,7 @@
 package com.github.rogeralmeida.faulttolerance.controllers;
 
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class SearchController {
 
     @RequestMapping("/search")
     public String search(@RequestParam(value = "query", required = false) String query, Model model) {
-        Set<Merchant> merchants = searchService.findMerchants(query);
-        model.addAttribute("venues", merchants);
+        Collection<Merchant> merchants = searchService.findMerchants(query);
+        model.addAttribute("merchants", merchants);
         return "searchResults";
     }
 

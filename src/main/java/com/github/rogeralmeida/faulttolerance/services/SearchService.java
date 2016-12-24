@@ -5,8 +5,7 @@
  */
 package com.github.rogeralmeida.faulttolerance.services;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +25,32 @@ public class SearchService {
     @Autowired
     private YelpService yelpService;
 
-    public Set<Merchant> findMerchants(String query) {
-        Set<Venue>      venues              = fourSquareService.searchVenues(query);
-        Set<Business>   businessReview      = yelpService.findBusinessReview(query);
-        return new HashSet<>();
+    public Collection<Merchant> findMerchants(String query) {
+        Map<String, Merchant> merchants = new HashMap<>();
+        Set<Venue> venues = fourSquareService.searchVenues(query);
+        Set<Business> businessReview = yelpService.findBusinessReview(query);
+
+        venues.forEach(venue -> {
+            Merchant merchant = getMerchant(merchants, venue.getName());
+            merchant.setFoursquareCheckins(venue.getStats().getCheckinsCount());
+            merchants.put(merchant.getName(), merchant);
+        });
+
+        businessReview.forEach(business -> {
+            Merchant merchant = getMerchant(merchants, business.getName());
+            merchant.setYelpRating(business.getRating());
+            merchants.put(merchant.getName(), merchant);
+        });
+
+        return merchants.values();
+    }
+
+    private Merchant getMerchant(Map<String, Merchant> merchants, String name) {
+        Merchant merchant = merchants.get(name);
+        if (merchant == null) {
+            merchant = new Merchant();
+            merchant.setName(name);
+        }
+        return merchant;
     }
 }

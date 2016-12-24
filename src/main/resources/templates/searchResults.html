@@ -41,16 +41,14 @@
             <tr>
                 <th>Name</th>
                 <th><i class="fa fa-foursquare" aria-hidden="true"></i></th>
-                <th>Action</th>
+                <th><i class="fa fa-yelp" aria-hidden="true"></i></th>
             </tr>
             </thead>
             <tbody>
-                <tr th:each="venue : ${venues}">
-                    <td th:text="${{ venue.name}}" ></td>
-                    <td th:text="${{venue.stats.checkinsCount }}"></td>
-                    <td>
-                        <a href="#" class="btn btn-primary">View</a>
-                    </td>
+                <tr th:each="merchant : ${merchants}">
+                    <td th:text="${{ merchant.name }}" ></td>
+                    <td th:text="${{ merchant.foursquareCheckins }}"></td>
+                    <td th:text="${{ merchant.yelpRating }}"></td>
                 </tr>
             </tbody>
         </table>
