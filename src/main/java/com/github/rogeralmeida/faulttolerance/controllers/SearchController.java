@@ -14,19 +14,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.github.rogeralmeida.faulttolerance.model.foursquare.Venue;
-import com.github.rogeralmeida.faulttolerance.services.FourSquareService;
+import com.github.rogeralmeida.faulttolerance.model.Merchant;
+import com.github.rogeralmeida.faulttolerance.services.SearchService;
 
 @Controller
 public class SearchController {
 
     @Autowired
-    private FourSquareService fourSquareService;
+    private SearchService searchService;
 
     @RequestMapping("/search")
     public String search(@RequestParam(value = "query", required = false) String query, Model model) {
-        Set<Venue> venues = fourSquareService.searchVenues(query);
-        model.addAttribute("venues", venues);
+        Set<Merchant> merchants = searchService.findMerchants(query);
+        model.addAttribute("venues", merchants);
         return "searchResults";
     }
 

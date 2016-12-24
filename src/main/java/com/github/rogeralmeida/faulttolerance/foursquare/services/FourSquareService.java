@@ -3,7 +3,7 @@
  * Lv1, 155 Clarence St, Sydney NSW 2000.
  * All rights reserved.
  */
-package com.github.rogeralmeida.faulttolerance.services;
+package com.github.rogeralmeida.faulttolerance.foursquare.services;
 
 import java.util.Set;
 
@@ -12,9 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.github.rogeralmeida.faulttolerance.model.foursquare.BodyResponse;
-import com.github.rogeralmeida.faulttolerance.model.foursquare.Venue;
-import com.github.rogeralmeida.faulttolerance.model.foursquare.VenueSearchResponse;
+import com.github.rogeralmeida.faulttolerance.foursquare.model.BodyResponse;
+import com.github.rogeralmeida.faulttolerance.foursquare.model.Venue;
+import com.github.rogeralmeida.faulttolerance.foursquare.model.VenueSearchResponse;
 
 import lombok.extern.java.Log;
 
@@ -32,10 +32,12 @@ public class FourSquareService {
     private RestTemplate restTemplate;
 
     public Set<Venue> searchVenues(String name) {
+
         ResponseEntity<VenueSearchResponse> venueSearchResponseResponseEntity = restTemplate.getForEntity(String.format(URL, name), VenueSearchResponse.class);
         VenueSearchResponse venueSearchResponse = venueSearchResponseResponseEntity.getBody();
         BodyResponse response = venueSearchResponse.getResponse();
         log.info("Response: " + response.toString());
+
         return response.getVenues();
     }
 

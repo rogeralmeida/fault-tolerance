@@ -3,9 +3,7 @@
  * Lv1, 155 Clarence St, Sydney NSW 2000.
  * All rights reserved.
  */
-package com.github.rogeralmeida.faulttolerance.model.foursquare;
-
-import org.springframework.scripting.support.StaticScriptSource;
+package com.github.rogeralmeida.faulttolerance.foursquare.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

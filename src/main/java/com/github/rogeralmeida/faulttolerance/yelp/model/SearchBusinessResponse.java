@@ -3,14 +3,14 @@
  * Lv1, 155 Clarence St, Sydney NSW 2000.
  * All rights reserved.
  */
-package com.github.rogeralmeida.faulttolerance.model.foursquare;
+package com.github.rogeralmeida.faulttolerance.yelp.model;
 
 import java.util.Set;
 
 import lombok.Data;
 
 @Data
-public class BodyResponse {
-
-    private Set<Venue> venues;
+public class SearchBusinessResponse {
+    private Integer total;
+    private Set<Business> businesses;
 }

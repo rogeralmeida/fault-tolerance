@@ -3,7 +3,7 @@
  * Lv1, 155 Clarence St, Sydney NSW 2000.
  * All rights reserved.
  */
-package com.github.rogeralmeida.faulttolerance.model.foursquare;
+package com.github.rogeralmeida.faulttolerance.foursquare.model;
 
 import lombok.Getter;
 import lombok.Setter;
