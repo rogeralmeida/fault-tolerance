@@ -48,4 +48,8 @@ dependencies {
 	compile("com.fasterxml.jackson.core:jackson-databind")
 	compile "org.projectlombok:lombok:1.16.12"
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+
+	// https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-core
+	compile group: 'com.netflix.hystrix', name: 'hystrix-core', version: '1.5.9'
 }
