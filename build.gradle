@@ -52,4 +52,7 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-core
 	compile group: 'com.netflix.hystrix', name: 'hystrix-core', version: '1.5.9'
+	// https://mvnrepository.com/artifact/com.netflix.hystrix/hystrix-metrics-event-stream
+	compile group: 'com.netflix.hystrix', name: 'hystrix-metrics-event-stream', version: '1.5.9'
+
 }

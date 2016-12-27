@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpRequest;
@@ -17,6 +18,7 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import com.github.rogeralmeida.faulttolerance.foursquare.services.FourSquareService;
+import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 
 import lombok.extern.java.Log;
 
@@ -27,6 +29,11 @@ public class DemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
+	}
+
+	@Bean
+	public ServletRegistrationBean registerHystrixMetrics() {
+		return new ServletRegistrationBean(new HystrixMetricsStreamServlet(), "/hystrix.stream");
 	}
 
 	@Bean
