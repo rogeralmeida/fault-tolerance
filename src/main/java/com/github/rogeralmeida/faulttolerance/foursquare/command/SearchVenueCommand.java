@@ -19,6 +19,8 @@ import com.github.rogeralmeida.faulttolerance.foursquare.model.Venue;
 import com.github.rogeralmeida.faulttolerance.foursquare.model.VenueSearchResponse;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandProperties;
+import com.netflix.hystrix.HystrixThreadPoolProperties;
 
 import lombok.extern.java.Log;
 
@@ -34,7 +36,18 @@ public class SearchVenueCommand extends HystrixCommand<Set<Venue>> {
     private final RestTemplate restTemplate;
 
     public SearchVenueCommand(String name, RestTemplate restTemplate) {
-        super(HystrixCommandGroupKey.Factory.asKey("FourSquare"));
+        super(
+                Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("FourSquare"))
+                .andCommandPropertiesDefaults(
+                        HystrixCommandProperties.Setter()
+                        .withCircuitBreakerRequestVolumeThreshold(100)
+                        .withMetricsRollingPercentileWindowInMilliseconds(3000)
+
+                ).andThreadPoolPropertiesDefaults(
+                        HystrixThreadPoolProperties.Setter()
+                        .withCoreSize(250)
+                )
+                );
         this.name = name;
         this.restTemplate = restTemplate;
     }
