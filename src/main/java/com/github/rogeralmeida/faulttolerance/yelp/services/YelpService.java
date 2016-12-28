@@ -36,29 +36,11 @@ public class YelpService {
     private TokenResponse tokenResponse;
 
     public Set<Business> findBusinessReview(String businessName) {
-        try {
-            ensureWeHaveTheAccessToken();
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        ensureWeHaveTheAccessToken();
 
-//        Map<String, Object> parametersMap = new HashMap<>();
-//        parametersMap.put("term", businessName);
-//        parametersMap.put("location", "Sydney, New South Whales, Australia");
+        HttpEntity<String> stringHttpEntity = buildHttpEntity();
 
-        HttpHeaders httpHeaders = getHttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.add("Authorization", "Bearer " + tokenResponse.getAccess_token());
-
-        HttpEntity<String> stringHttpEntity = new HttpEntity<>("", httpHeaders);
-
-        String url = null;
-        try {
-            url = "https://api.yelp.com/v3/businesses/search?location=" + URLEncoder.encode("Sydney, NSW, Australia", "UTF-8") + "&term="+
-                    URLEncoder.encode(businessName, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        String url = buildUrl(businessName);
 
         ResponseEntity<SearchBusinessResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET,
                 stringHttpEntity, SearchBusinessResponse.class);
@@ -66,7 +48,26 @@ public class YelpService {
         return searchBusinessResponse.getBusinesses();
     }
 
-    private void ensureWeHaveTheAccessToken() throws JsonProcessingException {
+    private String buildUrl(String businessName) {
+        String url = null;
+        try {
+            url = "https://api.yelp.com/v3/businesses/search?location=" + URLEncoder.encode("Sydney, NSW, Australia", "UTF-8") + "&term="+
+                    URLEncoder.encode(businessName, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return url;
+    }
+
+    private HttpEntity<String> buildHttpEntity() {
+        HttpHeaders httpHeaders = getHttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.add("Authorization", "Bearer " + tokenResponse.getAccess_token());
+
+        return new HttpEntity<>("", httpHeaders);
+    }
+
+    private void ensureWeHaveTheAccessToken() {
         if (tokenResponse == null) {
             String yelp_client_id = "0UuMWDaXUQNh3QkOR5mS-w"; //System.getenv("YELP_CLIENT_ID");
             String yelp_secret = "wGTfpUrrU2iHMwJNpzZJzvQbRf7A40cAKWo6ULKQH9aiQ0KJHIx4vPAOmHw7OPyo"; //System.getenv("YELP_SECRET");

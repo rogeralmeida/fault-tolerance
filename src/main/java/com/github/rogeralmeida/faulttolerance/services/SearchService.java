@@ -26,23 +26,31 @@ public class SearchService {
     private YelpService yelpService;
 
     public Collection<Merchant> findMerchants(String query) {
-        Map<String, Merchant> merchants = new HashMap<>();
         Set<Venue> venues = fourSquareService.searchVenues(query);
         Set<Business> businessReview = yelpService.findBusinessReview(query);
 
-        venues.forEach(venue -> {
-            Merchant merchant = getMerchant(merchants, venue.getName());
-            merchant.setFoursquareCheckins(venue.getStats().getCheckinsCount());
-            merchants.put(merchant.getName(), merchant);
-        });
+        Map<String, Merchant> merchants = new HashMap<>();
 
+        mergeFourSquareResults(venues, merchants);
+        mergeYelpResults(businessReview, merchants);
+
+        return merchants.values();
+    }
+
+    private void mergeYelpResults(Set<Business> businessReview, Map<String, Merchant> merchants) {
         businessReview.forEach(business -> {
             Merchant merchant = getMerchant(merchants, business.getName());
             merchant.setYelpRating(business.getRating());
             merchants.put(merchant.getName(), merchant);
         });
+    }
 
-        return merchants.values();
+    private void mergeFourSquareResults(Set<Venue> venues, Map<String, Merchant> merchants) {
+        venues.forEach(venue -> {
+            Merchant merchant = getMerchant(merchants, venue.getName());
+            merchant.setFoursquareCheckins(venue.getStats().getCheckinsCount());
+            merchants.put(merchant.getName(), merchant);
+        });
     }
 
     private Merchant getMerchant(Map<String, Merchant> merchants, String name) {

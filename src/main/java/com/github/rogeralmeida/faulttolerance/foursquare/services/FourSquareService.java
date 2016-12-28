@@ -37,7 +37,8 @@ public class FourSquareService {
 
         ResponseEntity<VenueSearchResponse> venueSearchResponseResponseEntity = null;
         try {
-            venueSearchResponseResponseEntity = restTemplate.getForEntity(String.format(URL, URLEncoder.encode(name, "UTF-8")), VenueSearchResponse.class);
+            venueSearchResponseResponseEntity = restTemplate.getForEntity(String.format(URL,
+                    URLEncoder.encode(name, "UTF-8")), VenueSearchResponse.class);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
